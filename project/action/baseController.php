@@ -13,20 +13,6 @@ class baseController
     }
 
 
-    protected function error($str,$status=0)
-    {
-        $data["status"] = $status;
-        $data["error"] = $str;
-        ajax_return($data);
-    }
-
-    protected function success($data)
-    {
-        $result["status"] = 1;
-        $result["data"] =$data;
-        ajax_return($result);
-    }
-
     protected function check_parameter($array)
     {
         $param = require(project_dictory . '/common/param.php');

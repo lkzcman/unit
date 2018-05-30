@@ -5,11 +5,9 @@
  * Date: 2017/9/4
  * Time: 19:46
  */
-class IndexController extends baseController
+class indexController extends baseController
 {
     public function index(){
-
-        var_dump(ayy::$app->redisdb);
-        var_dump(ayy::$app->db);
+        var_dump(unit::$app->db);
     }
 }

@@ -1,9 +1,10 @@
 <?php
+namespace unit\extend;
+
 /**
  * This is a Redis exntend class
  */
-
-class Rediscache
+class RedisCache
 {
     public static $instance = NULL;
     public static $linkHandle = array();
@@ -14,7 +15,7 @@ class Rediscache
     //construct:connect redis
     public function __construct($array)
     {
-        $this->initRedis($array["host"], $array['port'], $array["password"]);
+        $this->initRedis($array["host"], $array['port'], $array["password"],$array['db']);
     }
 
     /**
@@ -36,17 +37,18 @@ class Rediscache
      * 初始化Redis
      * $host,$port,$auth
      */
-    private function initRedis($host, $port, $auth)
+    private function initRedis($host, $port, $auth,$db)
     {
-        $obj = new Redis();
-        $db = intval($GLOBALS['distribution_cfg']['REDIS_PREFIX_DB']);
+        if (!class_exists("Redis")){
+            \unit::$output->error("请安装redis拓展",1003);
+        }
+        $obj = new \Redis();
         $connect = $obj->pconnect($host, $port);
         if ($connect) {
             $obj->auth($auth);
             $this->redis = $obj;
-            $this->exists("111");
         } else {
-            exit("redis connect fail:" . $connect);
+            \unit::$output->error("redis connect fail:" . $connect);
         }
         if ($db > 0) {
             $this->redis->select($db);

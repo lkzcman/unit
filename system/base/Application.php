@@ -5,15 +5,15 @@
  * Date: 2017/8/25
  * Time: 19:12
  */
-
+namespace unit\base;
 /**
  * Class Application
- * @property mysqli_db $db The database connection.This property is read-only.
- * @property Rediscache $redisdb The database connection.This property is read-only.
+ * @property \unit\extend\mysqli_db $db The database connection.This property is read-only.
+ * @property \unit\extend\RedisCache $redisdb The database connection.This property is read-only.
  */
+use unit;
 class Application{
     protected $contain;
-    public $update_session=0;
 
     public function __construct()
     {
@@ -25,22 +25,20 @@ class Application{
             ini_set("display_errors", 1);
             error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_DEPRECATED);
         }
-        ayy::$app=$this;
+        unit::$app=$this;
+        unit::$output=new OutPut();
     }
 
     public function __get($name)
     {
-        if(isset($_POST["debug"]))
-            echo $name;
         if($this->contain[$name]){
             return $this->contain[$name];
         }else{
-            if($GLOBALS["distribution_cfg"][$name]){
-               $this->contain[$name]=new $GLOBALS["distribution_cfg"][$name]["class_name"]($GLOBALS["distribution_cfg"][$name]);
+            if(unit::$config[$name]){
+               $this->contain[$name]=new unit::$config[$name]["class_name"](unit::$config[$name]);
                return $this->contain[$name];
             }else{
-                echo $name."不存在";
-                die;
+                unit::$output->error($name."不存在",1003);
             }
         }
 
@@ -58,14 +56,10 @@ class Application{
             if (method_exists($obj, $act)) {
                 $obj->$act();
             } else {
-                $error["status"] = 10006;
-                $error["error"] = "接口方法不存在";
-                ajax_return($error);
+                unit::$output->error("接口方法不存在",1002);
             }
         } else {
-            $error["status"] = 10005;
-            $error["error"] = "接口不存在";
-            ajax_return($error);
+            unit::$output->error("控制器不存在",1001);
         }
     }
 }

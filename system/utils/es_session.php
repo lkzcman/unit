@@ -27,7 +27,7 @@ class es_session
 
 	// 设置某个session值
 	static function set($name,$value) {
-        ayy::$app->update_session=1;
+        unit::$app->update_session=1;
 		$_SESSION[app_conf("AUTH_KEY").$name]  =   $value;
 	}
 

@@ -137,23 +137,6 @@ function quotes_mapi($content)
     return $content;
 }
 
-/*ajax返回*/
-function ajax_return($data, $is_debug = false)
-{
-    //$user_info = app_login();
-    //$data['user_info'] = $user_info;
-    if (!$is_debug) {
-        header("Content-Type:text/html; charset=utf-8");
-        filter_null($data);//过滤null
-        echo(json_encode($data));
-        exit;
-    } else {
-        var_export($data);
-        echo "<br />";
-        exit;
-    }
-
-}
 
 //过滤null 把null改为空;
 function filter_null(&$request)
@@ -190,6 +173,5 @@ function quotes($content)
     }
     return $content;
 }
-
 
 
