@@ -33,7 +33,8 @@ class unit
                 include_once project_dictory . "/model/" . $class_array[2] . ".php";
             }
             if (strstr($className, "Controller")) {
-                include_once project_dictory . "/action/" .$className. ".php";
+                $class_array = explode("\\", $className);
+                include_once project_dictory . "/action/" . $class_array[2] . ".php";
             }
         }
     }
