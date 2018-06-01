@@ -1,7 +1,7 @@
 <?php
 return[
     #接口缓存
-    'redisdb' => [
+    'redis' => [
         "host" => "127.0.0.1", //必填,redis链接
         "port" => "6379", //必填（redis使用的端口，默认为6379）
         "password" => "***",  //必填 redis密码
