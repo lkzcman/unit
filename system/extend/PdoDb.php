@@ -5,16 +5,25 @@
  * Date: 2018/5/11
  * Time: 10:56
  */
+
 namespace unit\extend;
+
 use PDO;
 use PDOStatement;
-/**
- * Class db
- * @property PDO $db The database connection.This property is read-only.
- * @property PDOStatement $sth
- */
+
 class PdoDb
 {
+    protected $settings = [];
+    public $prefix;
+    /**
+     * @var PDO the application instance
+     */
+    protected $db;
+    /**
+     * @var PDOStatement the application instance
+     */
+    protected $sth;
+
     function __construct($array)
     {
         $this->settings = array(
@@ -24,6 +33,7 @@ class PdoDb
             'dbname' => $array["DB_NAME"],
             'charset' => $array["charset"],
         );
+        $this->prefix=$array["prefix"];
         $this->connect();
     }
 
@@ -69,7 +79,7 @@ class PdoDb
     function getAll($sql, $param = [])
     {
         $this->query($sql, $param);
-        $result = $this->sth->fetchAll();
+        $result = $this->sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 

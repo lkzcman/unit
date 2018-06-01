@@ -7,6 +7,7 @@ return[
         "password" => "***",  //必填 redis密码
         'db'=>"***",
         'class_name' => 'unit\extend\RedisCache'
+		'prefix'=>"unit",
     ],
     'db' => [
         // 'DB_HOST'=>'127.0.0.1',

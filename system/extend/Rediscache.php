@@ -1,37 +1,27 @@
 <?php
 namespace unit\extend;
 
+use Redis;
+use Unit;
 /**
  * This is a Redis exntend class
  */
 class RedisCache
 {
-    public static $instance = NULL;
-    public static $linkHandle = array();
+    /**
+     * @var Redis the application instance
+     */
+    public $redis;
+    public $prefix;
 
-    var $redis;
 
 
     //construct:connect redis
     public function __construct($array)
     {
         $this->initRedis($array["host"], $array['port'], $array["password"],$array['db']);
+        $this->prefix=$array["prefix"];
     }
-
-    /**
-     * Get a instance of MyRedisClient
-     *
-     * @param string $key
-     * @return object
-     */
-    static function getInstance($configs)
-    {
-        if (!self::$instance) {
-            self::$instance = new self($configs);
-        }
-        return self::$instance;
-    }
-
 
     /**
      * 初始化Redis
@@ -40,15 +30,15 @@ class RedisCache
     private function initRedis($host, $port, $auth,$db)
     {
         if (!class_exists("Redis")){
-            \unit::$output->error("请安装redis拓展",1003);
+            unit::$output->error("请安装redis拓展",1003);
         }
-        $obj = new \Redis();
+        $obj = new Redis();
         $connect = $obj->pconnect($host, $port);
         if ($connect) {
             $obj->auth($auth);
             $this->redis = $obj;
         } else {
-            \unit::$output->error("redis connect fail:" . $connect);
+            unit::$output->error("redis connect fail:" . $connect);
         }
         if ($db > 0) {
             $this->redis->select($db);
@@ -56,13 +46,6 @@ class RedisCache
 
     }
 
-
-    /**
-     * 获得redis Resources
-     *
-     * @param $key     redis存的key/或随机值
-     * @param string $tag master/slave
-     */
     public function getRedis()
     {
         return $this->redis;

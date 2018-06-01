@@ -1,30 +1,24 @@
 <?php
-namespace ayy\redis;
+
+namespace unit\redis;
+
+use unit;
 
 /**
  * Class BaseRedis
- * @property \RedisCache $redis The database connection.This property is read-only.
+ * @property \unit\extend\RedisCache $redis The database connection.This property is read-only.
  */
 class BaseRedis
 {
+    protected $prefix;
+    protected $redis;
 
-    var $redis;
-
-    //  private $id;
-
-    /**
-     * +----------------------------------------------------------
-     * 架构函数
-     * +----------------------------------------------------------
-     * @access public
-     * +----------------------------------------------------------
-     */
     public function __construct()
     {
-        $this->redis = \unit::$app->redisdb;
-        $this->prefix = $GLOBALS['distribution_cfg']['REDIS_PREFIX'];
-
+        $this->redis = unit::$app->redis;
+        $this->prefix = $this->redis->prefix;
     }
 
 }
+
 ?>

@@ -22,20 +22,18 @@ class unit
     public static function autoload($className)
     {
         if (unit::$classmap[$className]) {
-            if($className=="Pdodb"){
-                echo "11";
-            }
             include_once unit::$classmap[$className];
         } else {
             if (strstr($className, "Redis")) {
                 $class_array = explode("\\", $className);
                 include_once project_dictory . "/redis/" . $class_array[2] . ".php";
             }
+            if (strstr($className, "model")) {
+                $class_array = explode("\\", $className);
+                include_once project_dictory . "/model/" . $class_array[2] . ".php";
+            }
             if (strstr($className, "Controller")) {
                 include_once project_dictory . "/action/" .$className. ".php";
-            }
-            if (strstr($className, "auto_cache")) {
-                include_once project_dictory . "/redis/auto_cache/" . $className . ".php";
             }
         }
     }
