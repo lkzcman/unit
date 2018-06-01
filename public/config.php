@@ -6,7 +6,7 @@ return[
         "port" => "6379", //必填（redis使用的端口，默认为6379）
         "password" => "***",  //必填 redis密码
         'db'=>"***",
-        'class_name' => 'unit\extend\RedisCache'
+        'class_name' => 'unit\extend\RedisCache',
 		'prefix'=>"unit",
     ],
     'db' => [
