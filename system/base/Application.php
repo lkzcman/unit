@@ -31,6 +31,12 @@ class Application
         }
         unit::$app = $this;
         unit::$output = new OutPut();
+        unit::$checker = new Checker();
+        if (isset($_REQUEST["debug"]) && unit::$config['debug']) {
+            unit::$debug = true;
+        } else {
+            unit::$debug = false;
+        }
     }
 
     public function __get($name)
@@ -55,7 +61,7 @@ class Application
         $_REQUEST['act'] = filter_ma_request_mapi($_REQUEST['act']);
         $class = strtolower(strim_mapi($_REQUEST['ctl'])) ? strtolower(strim_mapi($_REQUEST['ctl'])) : "index";
         $act = strtolower(strim_mapi($_REQUEST['act'])) ? strtolower(strim_mapi($_REQUEST['act'])) : "index";
-        $class = 'unit\action\\'.$class . 'Controller';
+        $class = 'unit\action\\' . $class . 'Controller';
         if (class_exists($class)) {
             $obj = new $class;
             if (method_exists($obj, $act)) {

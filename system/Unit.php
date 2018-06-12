@@ -15,9 +15,16 @@ class unit
     public static $classmap;
     public static $config;
     /**
-     * @var unit\base\OutPut the application instance
+     * @var unit\base\OutPut the output instance
      */
     public static $output;
+
+    /**
+     * @var unit\base\Checker the check instance
+     */
+    public static $checker;
+
+    public static $debug;
 
     public static function autoload($className)
     {
