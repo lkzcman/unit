@@ -19,5 +19,4 @@ class TimeTypeModel extends BaseModel
         return $data;
     }
 }
-
 ?>

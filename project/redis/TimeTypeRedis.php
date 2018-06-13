@@ -25,7 +25,7 @@ class TimeTypeRedis extends BaseRedis
     public function set_list()
     {
         $key = $this->prefix . "time_type";
-        $data = (new TimeTypeModel())->get_all();
+        $data = (new TimeTypeModel())->getAll();
         $cache_data = [];
         if ($data) {
             foreach ($data as $value) {

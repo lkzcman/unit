@@ -15,5 +15,5 @@ return [
         "class" => "\unit\action\baseController",
         "method" => "check_config_key",
         "param" => true
-    ], "require" => true, "type" => 'int', 'param' => "true"],
+    ], "require" => true, "type" => 'int', 'param' => "true","default"=>false],
 ];
