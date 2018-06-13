@@ -72,7 +72,7 @@ class PdoDb
     function getRow($sql, $param = [])
     {
         $this->query($sql, $param);
-        $result = $this->sth->fetch();
+        $result = $this->sth->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
