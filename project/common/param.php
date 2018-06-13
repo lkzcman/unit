@@ -7,5 +7,13 @@
  */
 #参数字典
 return [
-    "config_key"=>['comment'=>'手机号','function'=>'check_mobile',"require"=>true,"type"=>'int','param'=>"true"],
+    "mobile" => ['comment' => '手机号', 'checker' => [
+        "method" => 'check_mobile'
+        , 'param' => true,
+        'class' => false], "require" => true, "type" => 'int'],
+    "config_key" => ['comment' => '手机号', 'checker' => [
+        "class" => "\unit\action\baseController",
+        "method" => "check_config_key",
+        "param" => true
+    ], "require" => true, "type" => 'int', 'param' => "true"],
 ];

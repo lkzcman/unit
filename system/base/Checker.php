@@ -58,21 +58,36 @@ class Checker
                     }
                 }
             }
-            if ($param[$field]["function"]) {
-                $function = $param[$field]["function"];
-                if (function_exists($function)) {
-                    if ($param[$field]["param"]) {
-                        $this->field[$field] = $function($_REQUEST[$field]);
-                    } else {
-                        $this->field[$field] = $function();
+            if ($param[$field]["checker"]) {
+                $checker = $param[$field]["checker"];
+                if($checker["class"]){
+                    if(!class_exists($checker["class"])){
+                        unit::$output->error($checker["class"]."未定义",1002);
+                    }else{
+                        $class = new \ReflectionClass($checker["class"]);
                     }
-                } else {
-                    if ($param[$field]["param"]) {
-                        $this->field[$field] = $this->$function($_REQUEST[$field]);
-                    } else {
-                        $this->field[$field] = $this->$function();
+                   $ev=$class->getMethod($checker["method"]);
+                    if(!$ev){
+                        unit::$output->error($checker["method"]."方法未定义",1002);
+                    }else{
+                        $instance  = $class->newInstanceArgs();
+                        if ($checker["param"]) {
+                            $this->field[$field] = $ev->invoke( $instance,$_REQUEST[$field]);
+                        } else {
+                            $this->field[$field] ==$ev->invoke( $instance);
+                        }
                     }
-
+                }else {
+                    $function=$checker["method"];
+                    if (function_exists($function)) {
+                        if ($checker["param"]) {
+                            $this->field[$field] = call_user_func($function, $_REQUEST[$field]);
+                        } else {
+                            $this->field[$field] = call_user_func($function);
+                        }
+                    } else {
+                        unit::$output->error($checker["method"] . "未定义", 1002);
+                    }
                 }
             }
             if (!$this->field[$field]) {

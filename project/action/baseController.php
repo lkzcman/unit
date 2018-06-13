@@ -12,4 +12,12 @@ class baseController
     {
 
     }
+
+    public function check_config_key($key){
+        if($key!="112233"){
+            \unit::$output->error("config_key有误");
+        }else{
+            return $key;
+        }
+    }
 }

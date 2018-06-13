@@ -12,7 +12,7 @@ function api_log()
 function check_mobile($mobile)
 {
     if (!empty($mobile) && !preg_match("/^(1[0-9]{10})?$/", $mobile)) {
-        return false;
+        unit::$output->error("请填写正确手机号");
     } else
-        return true;
+        return $mobile;
 }
