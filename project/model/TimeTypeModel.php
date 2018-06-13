@@ -12,6 +12,9 @@ class TimeTypeModel extends BaseModel
         return $data;
     }
 
+    /*
+     * mysql预处理
+     */
     public function get_time_type($name){
         $sql="select * from time_type where name=:name limit 1";
         $param[":name"] = $name;
